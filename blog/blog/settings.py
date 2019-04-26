@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        "HOST":"176.234.12.55",    #连接数据库的地址
+        "HOST":"localhost",    #连接数据库的地址
         "PORT":3306,   # 端口
         "NAME":"blog",    # 数据库名称
         "USER":"root",  # 用户
