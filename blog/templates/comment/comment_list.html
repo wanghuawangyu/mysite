@@ -1,0 +1,54 @@
+{# <!DOCTYPE html> #}
+<meta http-equiv='Content-type' content='text/htm'>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'base/head.html' %}
+
+</head>
+<body>
+<div style="width: 1000px;margin: 0 auto">
+    {% include 'base/private_top.html' %}
+    <div>
+        {% include 'base/private_cebianlan.html' %}
+        {# 评论我的 #}
+        <div style="width: 790px;float:right;">
+            {% for comment_obj in comment_objs_slice %}
+                {# 第一行 #}
+                <div style="height:34px;line-height: 34px;">
+                    <span style="margin-right:5px;">{{ request.COOKIES.uname }}</span>
+                    <span style="margin-right:5px;">回复</span>
+                    <span style="margin-right:5px;">{{ comment_obj.comment_date|date:'Y-m-d' }}</span>
+                    <div style="float:right;margin-right: 100px;">
+                        <button class="btn btn-danger" onclick="location.href='/comment/comment_delete?comment_id={{ comment_obj.id }}'">删除</button>
+                    </div>
+                </div>
+                {# 第二行 #}
+                <div style="margin-bottom:10px;">
+                    <span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;{{ comment_obj.comment_text }}
+                    </span>
+                </div>
+                {# 第三行 #}
+                <div>
+                    <span style="margin-right: 50px;"><a href="/article/article_detail?article_id={{ comment_obj.article_id }}">{{ comment_obj.article.title }}</a></span>
+                    <span><span style="margin-right: 10px;">作者:</span><a href="/account?account={{ comment_obj.article.account.id}}">{{ comment_obj.article.account.name }}</a></span>
+                </div>
+                <hr style="margin: 5px 0;">
+            {% endfor %}
+
+        {# 分页 #}
+        <div style="position: relative;left: 110px;margin: 0 auto;">
+            {{ page_html|safe }}
+        </div>
+        </div>
+
+
+    </div>
+
+    {# 底部 #}
+    {% include 'base/foot.html' %}
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{# <!DOCTYPE html> #}
+<meta http-equiv='Content-type' content='text/htm'>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+{% include 'base/head.html' %}
+</head>
+<body>
+<div style="width: 1000px;margin: 0 auto">
+    {% include 'base/private_top.html' %}
+
+    {# 页面中部 #}
+    <div>
+        {% include 'base/private_cebianlan.html' %}
+        {# 文章编辑区域 #}
+        <div style="width: 790px;float:right;">
+            <form action="" method="post" enctype="multipart/form-data">
+                {# 隐藏域，储存文章id #}
+                    <input type="hidden" name="article_id" value="{{ article_obj.id }}">
+                {# 标题 #}
+                <div>
+                    <label for="exampleInputTitle1">文章标题</label>
+                    <input type="text" name="article_title" class="form-control" id="exampleInputTitle1" value="{{ article_obj.title}}">
+                    <hr style="margin: 5px 0;">
+                </div>
+                {# 摘要 #}
+                <div>
+                    <label for="exampleInputSummary1">文章摘要</label>
+                    <textarea name="article_summary"  class="form-control" rows="3" id="exampleInputSummary1">{{ article_obj.summary}}</textarea>
+                    <hr style="margin: 5px 0;">
+                </div>
+                {# 正文 #}
+                <div>
+
+                    <label for="exampleInputText1">正文</label>
+                    <textarea name="article_text"  class="form-control" rows="30" id="exampleInputText1">{% for p in article_obj.text %}{{ p }}
+{% endfor %}</textarea>
+                    <hr style="margin: 5px 0;">
+                </div>
+                {# 分组 #}
+                <div>
+                    <label for="exampleInputCategory1">文章分组</label>
+                    <select multiple name="article_category_id" class="form-control" id="exampleInputCategory1">
+
+                        {% for category_obj in category_objs_show %}
+                                {% if category_obj in article_obj.category.all %}
+                                    <option value="{{ category_obj.id }}" selected>{{ category_obj.name }}</option>
+                                {% else %}
+                                    <option value="{{ category_obj.id }}">{{ category_obj.name }}</option>
+                                {% endif %}
+                        {% endfor %}
+                    </select>
+                    <hr style="margin: 5px 0;">
+                </div>
+                {# 提交按钮 #}
+                <div ">
+                    <div style="float:left;margin-left: 275px;">
+                        <button type="button" class="btn btn-default" onclick="location.href='/article/article_list'">放弃修改</button>
+                    </div>
+                    <div style="float:right;margin-right: 275px;margin-bottom: 10px;">
+                        <button type="submit" class="btn btn-primary">提交修改</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    {# 页面底部 #}
+    {% include 'base/foot.html' %}
+</div>
+</body>
+</html>

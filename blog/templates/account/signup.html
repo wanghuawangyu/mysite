@@ -1,0 +1,85 @@
+{# <!DOCTYPE html> #}
+<meta http-equiv='Content-type' content='text/htm'>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册用户</title>
+    {% include 'base/head.html' %}
+</head>
+<body>
+<div style="width: 1000px;margin:0 auto;">
+
+    <p style="float:right;height: 40px;margin: 0;">
+        <a href="/" style="line-height: 40px;">返回首页</a>
+    </p>
+    <div style="background:transparent url('/static/jpg/logo.png') no-repeat center center;background-size:100px;width: 100px;height:40px;"></div>
+
+    <div style="background: url('/static/jpg/bklogin.jpg') no-repeat center;background-size:cover;position: relative;height: 700px" >
+        <div style="width: 500px;margin-right: 100px;position: absolute;background:rgba(255,255,255,0.5);right: -50px;margin-top: 30px">
+            <form action="/account/signup/" method="post" style="margin: 0 auto;padding:  10px" >
+                <div class="form-group">
+                    <label for="uname">用户名</label>
+                    <input type="text" class="form-control" id="uname" placeholder="请输入用户名" name="uname" maxlength="155">
+                </div>
+
+                <div class="form-group">
+                    <label for="mima">密码</label>
+                    <input type="password" class="form-control" id="mima" placeholder="请输入密码" name="upwd1">
+                </div>
+
+                <div class="form-group">
+                    <label for="cmima">密码确认</label>
+                    <input type="password" class="form-control" id="cmima" placeholder="确认密码" name="upwd2">
+                </div>
+
+                <div class="form-group">
+                    <label>验证码:<span style="background-color: tan">{{ showw }}</span></label>
+
+                    <input type="text" class="form-control" id="yan" placeholder="请输入验证码" name="asdn">
+                </div>
+
+
+                <div class="radio">
+                    <label>性别</label>
+                    <label>
+                        <input type="radio" name="gender1" id="optionsRadios1" value="male" checked>
+                        男
+                    </label>
+                    <label>
+                        <input type="radio" name="gender1" id="optionsRadios2" value="fmale">
+                        女
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="Email1">邮箱</label>
+                    <input type="email" class="form-control" id="Email1" placeholder="Email" name="email3">
+                </div>
+
+                <div class="form-group">
+                    <label for="hobby">爱好</label>
+                    <input type="text" class="form-control" id="hobby"  name="hobby3">
+                </div>
+
+                <div class="form-group">
+                    <label for="dec">个性签名</label>
+                    <textarea class="form-control" rows="3" id="dec" name="des"></textarea>
+                </div>
+
+                <div style="margin:0 auto;width:220px;">
+
+                    <input type="button" class="btn btn-default" onclick="back()" value="返回登录">
+                    <input type="submit" class="btn btn-danger" style="margin-left: 50px;" value="确认注册">
+                </div>
+            </form>
+        </div>
+    </div>
+    {% include "base/foot.html" %}
+</div>
+<script>
+    function back() {
+        location.href='/account/login'
+    }
+</script>
+</body>
+</html>

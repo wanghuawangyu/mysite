@@ -1,0 +1,97 @@
+{# <!DOCTYPE html> #}
+<meta http-equiv='Content-type' content='text/htm'>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'base/head.html' %}
+
+</head>
+<body>
+<div style="width: 1000px;margin: 0 auto">
+    {% include 'base/private_top.html' %}
+    <div>
+        {% include 'base/private_cebianlan.html' %}
+        {# 评论我的 #}
+        <div style="width: 790px;float:right;">
+            {% for comment_obj in comment_objs_slice %}
+                {% if comment_obj.retry_set.all %}
+                    {# 如果这个评论评论的别人的评论 #}
+                    {# 第一行 #}
+                    <div style="height:34px;line-height: 34px;">
+                        <span style="margin-right:5px;"><a href="/account?account={{ comment_obj.article.account.id}}">{{ comment_obj.account.name }}</a></span>
+                        <span style="margin-right:5px;">评论</span>
+                        <span style="margin-right:5px;">{{ comment_obj.comment_date|date:'Y-m-d' }}</span>
+                        <div style="float:right;margin-right: 100px;">
+                            <button class="btn btn-info" onclick="location.href='/comment/comment_delete?comment_id={{ comment_obj.id }}'">回复</button>
+                        </div>
+                    </div>
+                    {# 第二行 #}
+                    <div style="margin-bottom:10px;">
+                        <span>
+                            <a href="/article/article_detail?article_id={{ comment_obj.article_id }}">{{ comment_obj.article.title }}</a>
+                        </span>
+                    </div>
+                    {# 第三行 #}
+                    <div>
+                        <span>
+                            <p>{{ comment_obj.article.summary }}</p>
+                        </span>
+                    </div>
+                    {# 第四行 #}
+                    <div>
+                        <span>{{ comment_obj.account.name }}</span>
+                        <span>评论: </span>
+                        <span><b>{{ comment_obj.comment_text }}</b></span>
+                        {# <span style="margin-right: 50px;"><a href="/article/article_detail?article_id={{ comment_obj.article_id }}">{{ comment_obj.article.title }}</a></span>#}
+                        {# <span><span style="margin-right: 10px;">作者:</span><a href="/account?account={{ comment_obj.article.account.id}}">{{ comment_obj.article.account.name }}</a></span>#}
+                    </div>
+                {% else %}
+                    {# 这个评论没有评论的别人的评论 #}
+                    {# 第一行 #}
+                    <div style="height:34px;line-height: 34px;">
+                        <span style="margin-right:5px;"><a href="/account?account={{ comment_obj.article.account.id}}">{{ comment_obj.account.name }}</a></span>
+                        <span style="margin-right:5px;">评论</span>
+                        <span style="margin-right:5px;">{{ comment_obj.comment_date|date:'Y-m-d' }}</span>
+                        <div style="float:right;margin-right: 100px;">
+                            <button class="btn btn-info" onclick="location.href='/comment/comment_delete?comment_id={{ comment_obj.id }}'">回复</button>
+                        </div>
+                    </div>
+                    {# 第二行 #}
+                    <div style="margin-bottom:10px;">
+                        <span>
+                            <a href="/article/article_detail?article_id={{ comment_obj.article_id }}">{{ comment_obj.article.title }}</a>
+                        </span>
+                    </div>
+                    {# 第三行 #}
+                    <div>
+                        <span>
+                            <p>{{ comment_obj.article.summary }}</p>
+                        </span>
+                    </div>
+                    {# 第四行 #}
+                    <div>
+                        <span>{{ comment_obj.account.name }}</span>
+                        <span>评论: </span>
+                        <span><b>{{ comment_obj.comment_text }}</b></span>
+        {#                    <span style="margin-right: 50px;"><a href="/article/article_detail?article_id={{ comment_obj.article_id }}">{{ comment_obj.article.title }}</a></span>#}
+        {#                    <span><span style="margin-right: 10px;">作者:</span><a href="/account?account={{ comment_obj.article.account.id}}">{{ comment_obj.article.account.name }}</a></span>#}
+                    </div>
+                {% endif %}
+                <hr style="margin: 5px 0;">
+            {% endfor %}
+
+        {# 分页 #}
+        <div style="position: relative;left: 110px;margin: 0 auto;">
+            {{ page_html|safe }}
+        </div>
+        </div>
+
+
+    </div>
+
+    {# 底部 #}
+    {% include 'base/foot.html' %}
+</div>
+</body>
+</html>

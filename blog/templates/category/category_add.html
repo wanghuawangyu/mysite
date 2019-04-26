@@ -1,0 +1,44 @@
+{# <!DOCTYPE html> #}
+<meta http-equiv='Content-type' content='text/htm'>
+<html lang="en">
+<head>
+    <title>Title</title>
+    {% include 'base/head.html' %}
+</head>
+<body>
+
+<div style="overflow: auto;width: 1000px;clear: both;margin: 0 auto;">
+    {% include 'base/private_top.html'  %}
+    <div style="position: relative;">
+        {% include 'base/private_cebianlan.html' %}
+
+        <form action="/category/category_add" method="post" enctype="multipart/form-data" style="position: absolute;left: 210px;">
+
+            <div class="form-group">
+                <input type="hidden" name="category_id" value="{{ category_edit_obj.id }}">
+
+                <label for="exampleInputEmail1">请输入新的标签名称</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="category_name" placeholder="标签名称">
+                <p style="color: red">{{ errorstr }}</p>
+                <label for="exampleInputName1">请输入新的标签编号</label>
+                <input type="number" class="form-control" id="exampleInputName1" name="category_orderNo" placeholder="标签编号" >
+
+                <label for="exampleInputDescription1">请输入新的标签描述</label>
+                <input type="text" class="form-control" id="exampleInputDescription1"  name="category_description" placeholder="标签描述">
+
+            </div>
+            <div>
+                <p>
+                    <input class="btn btn-warning" type="submit" value="确认修改">
+    {#                <button class="btn btn-info" type="button"><a href="/category/category_list" style="color: white">放弃修改</a></button>#}
+                </p>
+            </div>
+
+        </form>
+
+    </div>
+    {% include 'base/foot.html'  %}
+    </div>
+
+</body>
+</html>

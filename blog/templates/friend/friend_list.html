@@ -1,0 +1,56 @@
+{# <!DOCTYPE html> #}
+<meta http-equiv='Content-type' content='text/htm'>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>caterory_list</title>
+    {% include 'base/head.html' %}
+
+</head>
+<body>
+
+<div style="width: 1000px;margin: 0 auto;">
+    {% include 'base/private_top.html' %}
+    <div>
+        {# 左 #}
+        {% include 'base/private_cebianlan.html' %}
+        {# 右 #}
+        <div style="float: right;">
+            <div  style="width: 790px;position: relative;left: 210px;">
+
+                <ul class="nav nav-pills" style="height: 60px;">
+                    <li role="presentation" class="active" style="font-size: 15px;"><a href="javascript:void(0)">我的好友</a ></li>
+                    <li role="presentation" style="margin-left: 10px; font-size: 15px;"><a href="/friend/friend_add">添加好友</a></li>
+                    <li role="presentation" style="margin-left: 10px; font-size: 15px;"><a href="/friend/friend_apply">好友申请</a></li>
+                </ul>
+            </div>
+            <div style="width: 790px;position: relative;clear:both;">
+                <ul class="list-group" style="margin-top:20px;box-shadow:0 0 0 rgba(0, 0, 0, 0);-webkit-box-shadow:0 0 0 rgba(0, 0, 0, 0)">
+                    {% for i in friend_lists_slice %}
+                        <li class="list-group-item" style="height:60px;font-size:20px;margin-bottom:5px;width:700px">
+                            <div style="line-height:38px;">
+                                <a href="/friend/friend_del/?friend_id={{ i.id }}" style="float: right;line-height: 60px;">
+                                    <span class="label label-danger" style="line-height:38px;margin-right:20px;">删除好友</span>
+                                </a>
+                                <a href="/account/friendInfos?user_id={{  i.id  }}">{{i.name}}</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div style="text-align: center;width: 700px;">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" style="font-size: 15px;">
+                            {{ page_html|safe }}
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% include "base/foot.html" %}
+</div>
+</body>
+</html>

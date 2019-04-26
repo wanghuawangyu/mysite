@@ -1,0 +1,91 @@
+{# <!DOCTYPE html> #}
+<meta http-equiv='Content-type' content='text/htm'>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    {% include 'base/head.html' %}
+
+</head>
+<body>
+<div style="width: 1000px;margin: 0 auto;">
+    {% include 'base/private_top.html' %}
+    <div>
+        {% include 'base/private_cebianlan.html' %}
+        {# 右 #}
+        <div style="float: right;">
+            <div  style="width: 790px;position: relative;left: 210px;clear: both;">
+                <ul class="nav nav-pills" style="height: 60px;">
+                    <li role="presentation" style="margin-left: 10px; font-size: 15px;"><a href="/friend/friend_list">我的好友</a></li>
+                    <li role="presentation" style="margin-left: 10px; font-size: 15px;"><a href="/friend/friend_add">添加好友</a></li>
+                    <li role="presentation" class="active" style="font-size: 15px;"><a href="javascript:void(0)">好友申请</a ></li>
+                </ul>
+            </div>
+
+            <div style="width: 790px;position: relative;clear:both;">
+                <ul class="list-group" style="margin-top: 20px;box-shadow:0 0 0 rgba(0, 0, 0, 0);-webkit-box-shadow:0 0 0 rgba(0, 0, 0, 0)">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% for i in applyme_lists_slice %}
+                            <li class="list-group-item" style="height:60px;font-size:160%;margin: 0 auto;width:700px;margin-bottom:5px;line-height:38px">
+                                <div >
+                                    {# /friend/friend_apply?user_id={{ i.id }}&action=1 #}
+                                    <div id="applyOrRefuse{{ forloop.counter }}" style="float:right;line-height:38px;margin-left: 20px;">
+                                    <a href='javascript:apply({{i.id}},1,{{ forloop.counter }})' style="float:right;line-height:38px;margin-left: 20px;">
+                                        <span class="label label-danger" style="line-height:35px;background-color:#337AB7;">同意</span>
+                                    </a>
+                                      <a href="javascript:refused({{i.id}},0,{{ forloop.counter }})" style="float:right;line-height:38px">
+                                        <span class="label label-danger" style="line-height:35px;">拒绝</span>
+                                    </a>
+                                    </div>
+                                    <a href="/account/friendInfos?user_id={{ i.id }}">{{i.name}}</a>申请加你好友
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </form>
+                </ul>
+            <script>
+                function apply(userid,action,idid) {
+                    $('#applyOrRefuse'+idid).css('color','#FA8EAA')
+                    $.ajax({
+                        url:"/friend/friend_apply",
+                        type:'get',
+                        data:"user_id="+userid+"&action="+action,
+                        async:"false",
+                        dataType:"text",
+                        success:function (data) {
+                            $('#applyOrRefuse'+idid).html('<a href="javascript:void(0)">'+data+'</a>')
+                            console.log(data)
+                        }
+                    })
+                }
+
+                function refused(userid,action,idid) {
+                    $('#applyOrRefuse'+idid).css('color','gray')
+                    $.ajax({
+                        url:"/friend/friend_apply",
+                        type:'get',
+                        data:"user_id="+userid+"&action="+action,
+                        async:"false",
+                        dataType:"text",
+                        success:function (data) {
+                            $('#applyOrRefuse'+idid).html('<a href="javascript:void(0)">'+data+'</a>')
+                            console.log(data)
+                        }
+                    })
+                }
+
+            </script>
+            </div>
+
+            <div style="text-align: center;">
+
+                {{ page_html|safe }}
+
+            </div>
+        </div>
+    </div>
+    {% include "base/foot.html" %}
+</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+{# <!DOCTYPE html> #}
+<meta http-equiv='Content-type' content='text/htm'>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加好友</title>
+    <link href="/static/bootstrap/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
+    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script src="/static/js/jquery-3.3.1.js"></script>
+</head>
+<body>
+<div style="width: 1000px;margin:0 auto;">
+    {% include 'base/private_top.html' %}
+    <div>
+        {# 左 #}
+        {% include 'base/private_cebianlan.html' %}
+        {# 又 #}
+        <div style="float: right;">
+            <div style="width: 790px;position: relative;left: 210px;">
+                <ul class="nav nav-pills" style="height: 60px;">
+                    <li role="presentation" style="margin-left: 10px; font-size: 15px;"><a href="/friend/friend_list">我的好友</a></li>
+                    <li role="presentation" class="active" style="font-size: 15px;"><a href="javascript:void(0)">添加好友</a ></li>
+                    <li role="presentation" style="margin-left: 10px; font-size: 15px;"><a href="/friend/friend_apply">好友申请</a></li>
+                </ul>
+            </div>
+
+
+            {# 搜索框#}
+            <div class="col-lg-6" style="width:500px;text-align: center;position: relative;left: 145px;">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="ID/用户名" name="friend_name_or_id">
+                        <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">搜索</button>
+                    </span>
+                    </div><!-- /input-group -->
+                </form>
+            </div><!-- /.col-lg-6 -->
+
+            {# 搜索的好友信息#}
+            <div style="width: 790px;position: relative;clear:both;">
+                <ul class="list-group" style="font-size:18px;">
+                    {% for res in res_lists_slice %}
+                        <div>{#   #}
+                            <li class="list-group-item" style="height:60px;margin-top:10px;margin-left:0;line-height:38px;">
+                                <span style="position: absolute;top:12px;left:10px;"><a href="/account/friendInfos?user_id={{ res.id }}">{{res.name}}</a></span>
+                                <span style="position: absolute;top:12px;right:10px;">
+                                {% if res.option == 'friend' %}
+                                    <a href="/account/friendInfos?user_id={{ res.id }}" style="color: #3ac57d">已是好友</a>
+                                {% elif res.option == 'myapply' %}
+                                    <a href="/account/friendInfos?user_id={{ res.id }}" style="color: #FA8EAA">等待对方通过申请</a>
+                                {% elif res.option == 'applyme' %}
+                                    <a href="/friend/friend_apply?user_id={{ res.id }}" style="color: #c0a16b">处理对方好友申请</a>
+                                {% elif res.option == 'add'  %}
+                                    <a href='javascript:add({{res.id}},{{ forloop.counter }})'>添加好友</a>
+                                {% endif %}
+                                </span>
+                                <span id="friendAdd{{ forloop.counter }}" style="position: absolute;top:12px;right:30%;"></span>
+                            </li>
+                        </div>
+
+
+                    {% endfor %}
+                </ul>
+            <script>
+                function add(userid,idid) {
+                    $('#friendAdd'+idid).css('color','#FA8EAA')
+                    $('#friendAdd'+idid).text('已向该用户发送好友申请，等待对方同意')
+                    $.ajax({
+                        url:"/friend/friend_add",
+                        type:'get',
+                        data:"user_id="+userid,
+                        async:"false",
+                        dataType:"text",
+                        success:function (data) {
+                            $('#friendAdd'+idid).text(data)
+                            console.log(data)
+
+                        }
+                    })
+                }
+            </script>
+            </div>
+            <div>
+                {{ page_html|safe }}
+            </div>
+        </div>
+    </div>
+    {% include "base/foot.html" %}
+</div>
+</body>
+</html>

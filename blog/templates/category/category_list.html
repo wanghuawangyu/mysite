@@ -1,0 +1,59 @@
+{# <!DOCTYPE html> #}
+<meta http-equiv='Content-type' content='text/htm'>
+<html lang="en">
+<head>
+     <title>Title</title>
+    {% include 'base/head.html' %}
+</head>
+<body>
+<div style="overflow: auto;width: 1000px;clear: both;margin: 0 auto;">
+{% include 'base/private_top.html'  %}
+
+<div style="position: relative;overflow:hidden;">
+    {% include 'base/private_cebianlan.html' %}
+    <div  style="position: absolute;left: 210px;">
+    {#  单页查询结果  #}
+    <table class="table table-hover" style="width:750px;">
+        <thead>
+            <tr>
+                <td align="center">序号</td>
+                <td align="center">博客分类</td>
+                <td align="center">博客数</td>
+                <td align="center">标签描述</td>
+                <td style="text-align: center;">管理</td>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% with count=1 %}
+
+
+            {% for category in category_objs_slice %}
+                {% if category.name not in '草稿,无标签文章,所有文章' %}
+                    <tr>
+                        <td align="center">{{forloop.counter}}</td>
+                        <td align="center">{{category.name}}</td>
+                        <td align="center">{{category.article_set.count}}</td>
+                        <td align="center">{{category.description}}</td>
+                        <td align="center">
+                        <button type="button" class="btn btn-warning"><a href="/category/category_edit?category_id={{ category.id }}" style="color: white;">修改</a></button>
+                        <button type="button" class="btn btn-danger"> <a href="/category/category_dele?category_id={{ category.id }}" style="color: white;">删除</button>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endwith %}
+        </tbody>
+    </table>
+
+    {#  分页  #}
+    {{ page_html|safe }}
+
+    </div>
+</div>
+
+{% include 'base/foot.html'  %}
+
+</div>
+</body>
+</html>

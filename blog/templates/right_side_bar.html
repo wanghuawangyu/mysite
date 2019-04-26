@@ -1,0 +1,50 @@
+{% load blog_tags %}
+    {% block toc %}{% endblock %}
+    <div class="row">
+        <div class="widget" >
+            <h3>推荐博客</h3>
+            {% get_popular_articles as popular_articles %}
+            {% for article in popular_articles %}
+                <div style="margin:5px 0;">
+                    <a href="/article/article_detail?article_id={{article.id }}">{{ article.title }}</a>
+                    <div>
+                        <span class="badge" style="color:white;background-color: skyblue">{{ article.comment_num }}+热评</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <hr style="position: relative;left: -15px;" />
+    <div class="row">
+        <div class="widget">
+            <h3>最新博客</h3>
+            {% get_new_articles as articles_list %}
+            {% for article in articles_list %}
+                <div style="margin:5px 0;">
+                    <a href="/article/article_detail?article_id={{article.id }}" style="font-size: 14px;">{{ article.title }}</a>
+                    <div>
+                        <a href="/account/friendInfos?user_id={{ article.account.id }}" style="font-size: 12px;">{{ article.account.name }}</a> 发表于：{{ article.create_date|date:'Y年m月d日' }}
+                    </div>
+                </div>
+{#                <hr style="margin: 0">#}
+            {% endfor %}
+        </div>
+    </div>
+    <hr style="position: relative;left: -15px;" />
+    <div class="row">
+        <div class="widget">
+            <h3>标签云</h3>
+            {% get_categories as categories_list %}
+            {% for category in categories_list %}
+                  {% if category.name not in '草稿,无标签文章,所有文章' %}
+
+
+                  <a style="display: inline-block;margin:5px" href="#">
+                      <span class="label {% cycle 'label-default' 'label-primary' 'label-success' 'label-info' 'label-warning' 'label-danger' %}">{{ category.name }}</span>
+                  </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <hr style="position: relative;left: -15px;" />
+

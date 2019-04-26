@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}博客首页{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+
+                <div id="myCarousel" class="carousel slide">
+                    <!-- 轮播（Carousel）指标 -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+
+                    </ol>
+                    <!-- 轮播（Carousel）项目 -->
+                    <div class="carousel-inner" role="listbox">
+
+                        <div class="item active">
+                            <a href="/article/article_detail?article_id={{article.0.id }}">
+                                <img src="/static/images/3.jpg" alt="First slide">
+                            </a>
+                            <div class="carousel-caption">{{ article_list.0.title }}</div>
+
+                        </div>
+                        <div class="item">
+                            <a href="/article/article_detail?article_id={{article.1.id }}">
+                                <img src="/static/images/4.jpg" alt="Second slide">
+                            </a>
+                            <div class="carousel-caption">{{ article_list.1.title }}</div>
+                        </div>
+                        <div class="item">
+                            <a href="/article/article_detail?article_id={{article.2.id }}">
+                                <img src="/static/images/9.jpg" alt="Third slide">
+                            </a>
+                            <div class="carousel-caption">{{ article_list.2.title }}</div>
+                        </div>
+                    </div>
+
+                    <!-- 轮播（Carousel）导航 -->
+                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+
+                {% for article in article_list %}
+                    <hr/>
+                    {#标题连接 /article/article_detail?article_id=10001#}
+                    <h2><a href="/article/article_detail?article_id={{article.id }}">{{ article.title }}</a></h2>
+
+                    {% if article.summary %}
+                        <p>{{ article.summary }}</p>
+                    {% else %}
+                        <p>{{ article.text|truncatechars:128 }}</p>
+                    {% endif %}
+                    <p>
+                        <span>作者:<a href="/account/friendInfos?user_id={{ article.account.id }}">{{ article.account.name }}</a></span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;发表时间:{{ article.create_date|date:"Y-m-d" }}</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;浏览量:{{ article.read_num }}</span>
+                    </p>
+                {% endfor %}
+                <hr/>
+                <!--/.pagination-->
+                <div id="paginator" class="pull-right">
+                    <ul class="pagination">
+                        {% if article_list.has_previous %}
+                            <li><a href="?page={{ article_list.previous_page_number }}"><i
+                                    class="glyphicon glyphicon-chevron-left"></i>前一页</a></li>
+                        {% endif %}
+
+                        {% if first %}
+                            <li><a href="?page=1">1</a></li>
+                        {% endif %}
+
+                        {% if left %}
+                            {% if left_has_more %}
+                                <span>...</span>
+                            {% endif %}
+
+                            {% for i in left %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endfor %}
+                        {% endif %}
+
+
+                        <li class="active"><a href="?page={{ article_list.number }}">{{ article_list.number }}</a></li>
+
+                        {% if right %}
+                            {% for i in right %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endfor %}
+
+                            {% if right_has_more %}
+                                <span>...</span>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if last %}
+                            <li><a href="?page={{ article_list.num_pages }}">{{ article_list.num_pages }}</a></li>
+                        {% endif %}
+
+                        {% if article_list.has_next %}
+                            <li><a href="?page={{ article_list.next_page_number }}">下一页<i
+                                    class="glyphicon glyphicon-chevron-right"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                {% include "right_side_bar.html" %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

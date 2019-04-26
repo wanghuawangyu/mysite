@@ -1,0 +1,49 @@
+{# <!DOCTYPE html> #}
+<meta http-equiv='Content-type' content='text/htm'>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    {% include 'base/head.html' %}
+
+
+</head>
+<body>
+<div style="width: 1000px;margin:0 auto;">
+{% include 'base/private_top.html' %}
+{% include 'base/private_cebianlan.html' %}
+
+    {% for i in artc_obj %}
+    <div style="margin-left:260px;">
+        <h3><a href="/article/article_detail?article_id={{ i.id }}">{{ i.title }}</a></h3>
+
+{#        <h5>文章摘要</h5>#}
+        {% if i.summary %}
+            <p>{{ i.summary }}</p>
+        {% else %}
+            <p>{{ i.text|truncatechars:150 }}</p>
+        {% endif %}
+
+
+{#        <br>#}
+        <span>发表时间:{{ i.create_date|date:'Y-m-d' }}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span>浏览量:{{ i.read_num }}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span>评论数:{{ i.comment_num }}</span>
+         &nbsp;&nbsp;&nbsp;&nbsp;
+        <span>点赞数:{{ i.like_num }}</span>
+         &nbsp;&nbsp;&nbsp;&nbsp;
+        <span>吐槽数:{{ i.dislike_num }}</span>
+         &nbsp;&nbsp;&nbsp;&nbsp;
+{#        <br>#}
+        <hr style="margin: 5px 0 10px 0">
+
+    </div>
+    {% endfor %}
+
+
+{% include "base/foot.html" %}
+</div>
+</body>
+</html>

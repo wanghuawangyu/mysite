@@ -1,0 +1,77 @@
+{# <!DOCTYPE html> #}
+<meta http-equiv='Content-type' content='text/htm'>
+<html lang="en">
+<head>
+     <title>Title</title>
+    {% include 'base/head.html' %}
+    <script>
+        article_delete()
+
+
+    </script>
+</head>
+<body>
+<div style="width: 1000px;margin: 0 auto">
+    {% include 'base/private_top.html' %}
+    <div>
+        {% include 'base/private_cebianlan.html' %}
+        <div style="width: 790px;float:right;">
+            {# 新增文章 #}
+            <div>
+                <button type="button" class="btn btn-info" onclick="location.href='/article/article_add'">新增文章</button>
+            </div>
+            {% for article_obj in article_objs_slice %}
+            <div>
+                {# 文章标题 #}
+                <div style="margin-bottom: 5px;">
+                    <div style="vertical-align:middle;">
+                        <h3 style="float: left;line-height: 30px;height: 30px;margin: 2px 0;"><a href="/article/article_detail?article_id={{ article_obj.id }}">{{ article_obj.title }}</a></h3>
+                    </div>
+                    <div style="float:right;margin-left: 5px;vertical-align: middle">
+                        <button type="button" class="btn btn-danger" onclick="location.href='/article/article_delete?article_id={{ article_obj.id }}'">删除文章</button>
+                    </div>
+                    <div style="float:right;vertical-align: middle">
+                        <button type="button" class="btn btn-warning" onclick="location.href='/article/article_edit?article_id={{ article_obj.id }}'">修改文章</button>
+                    </div>
+                </div>
+                {# 文章摘要 #}
+                <div>
+                    {% if article_obj.summary %}
+                        <p style="clear: both">{{ article_obj.summary }}</p>
+                    {% else %}
+                        <p style="clear: both">{{ article_obj.text|truncatewords:30 }}</p>
+                    {% endif %}
+
+                    
+
+                </div>
+
+                {# 文章信息 #}
+                <div>
+                    <span>发表时间:{{ article_obj.create_date|date:'Y-m-d' }}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>浏览量:{{ article_obj.read_num }}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>评论数:{{ article_obj.comment_num }}</span>
+                     &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>点赞数:{{ article_obj.like_num }}</span>
+                     &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>吐槽数:{{ article_obj.dislike_num }}</span>
+                     &nbsp;&nbsp;&nbsp;&nbsp;
+                    <hr style="margin: 5px 0;">
+                </div>
+            </div>
+            {% endfor %}
+
+            <div style="position: relative;left: 110px;margin: 0 auto;">
+                        {{ page_html|safe }}
+            </div>
+        </div>
+
+
+    </div>
+
+    {% include 'base/foot.html' %}
+</div>
+</body>
+</html>

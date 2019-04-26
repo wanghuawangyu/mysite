@@ -1,0 +1,24 @@
+<div class="list-group" style="width:200px;float: left;margin-right: 10px">
+
+    <a href="/account" class="list-group-item {% if request.path_info == '/account' %}active{% endif %}">个人设置</a>
+    <a href="/account/profile" class="list-group-item {% if request.path_info == '/account/profile' %}active{% endif %}">&nbsp;&nbsp;&nbsp;信息维护</a>
+    <a href="/account/password" class="list-group-item {% if request.path_info == '/account/password' %}active{% endif %}">&nbsp;&nbsp;&nbsp;密码管理</a>
+    <a href="/friend" class="list-group-item {% if request.path_info == '/friend' %}active{% endif %}">好友管理</a>
+    <a href="/friend/friend_list" class="list-group-item {% if request.path_info == '/friend/friend_list' %}active{% endif %}">&nbsp;&nbsp;&nbsp;全部好友</a>
+    <a href='/friend/friend_add' class="list-group-item {% if request.path_info == '/friend/friend_add' %}active{% endif %}">&nbsp;&nbsp;&nbsp;添加好友</a>
+    <a href='/friend/friend_apply' class="list-group-item {% if request.path_info == '/friend/friend_apply' %}active{% endif %}">&nbsp;&nbsp;&nbsp;好友申请</a>
+    <a href="/article" class="list-group-item {% if request.path_info == '/article' %}active{% endif %}">文章管理</a>
+
+    {% for foo in category_objs %}
+        <a href="/article/article_list?category={{ foo.id }}" class="list-group-item {% if request.path_info == '/article/article_list' and request.GET.category == foo.id|make_list|join:"" %}active{% endif %}">&nbsp;&nbsp;&nbsp;{{foo.name}}<span class="badge">{{foo.article_set.all.count}}</span></a>
+    {% endfor %}
+
+    <a href="/category" class="list-group-item {% if request.path_info == '/category' %}active{% endif %}">分组管理</a>
+    <a href="/category/category_list" class="list-group-item {% if request.path_info == '/category/category_list' %}active{% endif %}">&nbsp;&nbsp;&nbsp;所有分组</a>
+    <a href="/category/category_add" class="list-group-item {% if request.path_info == '/category/category_add' %}active{% endif %}">&nbsp;&nbsp;&nbsp;新增分组</a>
+
+    <a href='/comment' class="list-group-item {% if request.path_info == '/comment' %}active{% endif %}">评论管理</a>
+    <a href='/comment/comment_list' class="list-group-item {% if request.path_info == '/comment/comment_list' %}active{% endif %}">&nbsp;&nbsp;&nbsp;我的评论</a>
+    <a href='/comment/comment_retry_me' class="list-group-item {% if request.path_info == '/comment/comment_retry_me' %}active{% endif %}">&nbsp;&nbsp;&nbsp;评论我的</a>
+
+</div>

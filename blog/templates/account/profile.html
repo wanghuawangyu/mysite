@@ -1,0 +1,80 @@
+{# <!DOCTYPE html> #}
+<meta http-equiv='Content-type' content='text/htm'>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改</title>
+    {% include 'base/head.html' %}
+
+</head>
+<body>
+<div style="width: 1000px;margin:0 auto;">
+    {% include 'base/private_top.html' %}
+    {% include 'base/private_cebianlan.html' %}
+
+    <div style="margin-left:260px;" >
+        <form action="/account/profile/" method="post" style="margin: 0 auto;padding:  10px" >
+            <div class="form-group">
+                <label for="uname"></label>
+                <input type="hidden" class="form-control" id="uid" placeholder="用户id" name="uid" maxlength="155" value="{{ blogg.id }}">
+            </div>
+
+            <div class="form-group">
+                <label for="uname">用户名</label>
+                <input type="text" class="form-control" id="uname" placeholder="请输入用户名" name="uname" maxlength="155" value="{{ blogg.name }}">
+                {% if name_err != 'False' %}
+                    <p style="color:red">{{ name_err }}</p>
+                {% endif %}
+            </div>
+
+            <div class="radio">
+                <label>性别</label>
+                <label>
+                    <input type="radio" name="gender1" id="optionsRadios1" value="male" checked>
+                    男
+                </label>
+                <label>
+                    <input type="radio" name="gender1" id="optionsRadios2" value="fmale">
+                    女
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="Email1">邮箱</label>
+                <input type="email" class="form-control" id="Email1" placeholder="Email" name="email3" value="{{ blogg.email }}">
+                {% if email_err != 'False' %}
+                    <p style="color: red;">{{ email_err }}</p>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="hobby">爱好</label>
+                <input type="text" class="form-control" id="hobby"  name="hobby3" value="{{ blogg.hobby }}">
+            </div>
+
+            <div class="form-group">
+                <label for="dec">描述</label>
+                <textarea class="form-control" rows="3" id="dec" value="" name="des">{{ blogg.description }}</textarea>
+            </div>
+
+
+
+            <div style="margin: 0 auto;width: 300px;">
+                <button type="button" class="btn btn-default" onclick="back()">放弃修改</button>
+                <button type="submit" class="btn btn-danger" style="margin-left:100px; ">确认修改</button>
+            </div>
+
+
+
+        </form>
+    </div>
+
+    {% include "base/foot.html" %}
+</div>>
+<script>
+    function back() {
+        location.href='/account'
+    }
+</script>
+</body>
+</html>

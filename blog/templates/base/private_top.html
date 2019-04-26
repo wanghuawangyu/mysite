@@ -1,0 +1,115 @@
+<div style="height:80px;position: relative">
+    {#  左侧logo  #}
+    <div style="width: 100px;height: 40px;">
+        <a href="/">
+            <div style="background:transparent url('/static/jpg/logo.png') no-repeat center center;background-size:100px;width: 100px;height:40px;">
+            </div>
+        </a>
+    </div>
+    {#  右侧下拉导航  #}
+    <div class=" dropdown" style="position: absolute;top: 0;right:0;">{#  #}
+        {% if request.COOKIES.isLogin == "True" %}
+
+
+
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                {{request.COOKIES.uname}}
+                <span class="caret" ></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="position: absolute;z-index: 1;">
+                <li><a href="/account">个人设置</a></li>
+                <li><a href="/friend">好友管理</a></li>
+                <li><a href="/article">文章管理</a></li>
+                <li><a href="/category">分组管理</a></li>
+                <li><a href="/comment">评论管理</a></li>
+            </ul>
+            <button class="btn btn-default"><a href="/account/logout">退出登陆</a></button>
+            <script>
+                $('#dropdownMenu1').click(function () {
+                    $(this).next("ul").css("display", 'block').css("z-index","1000");
+                });
+                $('#dropdownMenu1+ul').mouseover(function () {
+                    $(this).css("display",'block').css("z-index","1000");
+                });
+                $('#dropdownMenu1+ul').mouseout(function () {
+                    $(this).css("display",'none');
+                });
+            </script>
+        {% else %}
+            <div class="nav navbar-nav navbar-right">
+
+                <li>
+                    <a href="/account/login">
+                        <i class="glyphicon glyphicon-log-in"></i>&nbsp&nbsp登录
+                    </a>
+                </li>
+                <li>
+                    <a href="/account/signup">
+                        <i class="glyphicon glyphicon-user"></i>&nbsp&nbsp;注册
+                    </a>
+                </li>
+            </div>
+
+
+        {% endif %}
+    </div>
+
+    {#  路径栏   #}
+    <div style="height: 40px;position:relative;">{# z-index:-1 #}
+        {% if "account" in request.path_info %}
+            {% load account_filters %}
+        {% elif "friend" in request.path_info %}
+            {% load friend_filters %}
+        {% elif "article" in request.path_info %}
+            {% load article_filters %}
+        {% elif "category" in request.path_info %}
+            {% load category_filters %}
+        {% elif "comment" in request.path_info %}
+            {% load comment_filters %}
+        {% endif %}
+
+        {% with path=request.path_info|split:'/'|slice:"1:3" %}
+            <ol class="breadcrumb">
+                <li><a href="/account">个人中心</a></li>
+                {% with path1=path|slice:"0:1"|join:"" %}
+                    {% if path1 == 'account' %}
+                        <li><a href="/account">个人设置</a></li>
+                    {% elif path1 == 'friend' %}
+                        <li><a href="/friend">好友管理</a></li>
+                    {% elif path1 == 'article' %}
+                        <li><a href="/article">文章管理</a></li>
+                    {% elif path1 == 'category' %}
+                        <li><a href="/category">分组管理</a></li>
+                    {% elif path1 == 'comment' %}
+                        <li><a href="/comment">评论管理</a></li>
+                    {% endif %}
+                {% endwith %}
+                {% with path2=path|slice:"1:2"|join:"" %}
+                    {% if path2 == 'profile' %}
+                        <li><a href="/account/profile" class="active">信息维护</a></li>
+                    {% elif path2 == 'password' %}
+                        <li><a href="/account/password" class="active">密码管理</a></li>
+                    {% elif path2 == 'friend_list' %}
+                        <li><a href="/friend/friend_list" class="active">全部好友</a></li>
+                    {% elif path2 == 'friend_add' %}
+                        <li><a href="/friend/friend_add" class="active">添加好友</a></li>
+                    {% elif path2 == 'friend_apply' %}
+                        <li><a href="/friend/friend_apply" class="active">好友申请</a></li>
+                    {% elif path2 == 'article_list' %}
+                        <li><a href="/article/article_list" class="active">所有文章</a></li>
+                    {% elif path2 == 'category_list' %}
+                        <li><a href="/category/category_list" class="active">所有分组</a></li>
+                    {% elif path2 == 'category_add' %}
+                        <li><a href="/category/category_add" class="active">新增分组</a></li>
+                    {% elif path2 == 'comment_list' %}
+                        <li><a href="/comment/comment_list" class="active">我的评论</a></li>
+                    {% elif path2 == 'comment_retry_me' %}
+                        <li><a href="/comment/comment_retry_me" class="active">评论我的</a></li>
+                    {% endif %}
+                {% endwith %}
+            </ol>
+        {% endwith %}
+    </div>
+
+
+</div>
