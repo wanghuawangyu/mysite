@@ -1,0 +1,54 @@
+<header id="header">
+    <!--menu begin-->
+    <div class="menu">
+        <nav class="nav" id="topnav">
+            <h1 class="logo"><a href="/index">个人博客</a></h1>
+            <li><a href="/index">网站首页</a> </li>
+            <li><a href="/list">文章列表</a>
+                <ul class="sub-nav">
+                    {% for category_obj in category_objs %}
+                        <li><a href="/list?category_id={{ category_obj.id }}">{{ category_obj.cate_name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li><a href="/photo">我的相册</a>
+            </li>
+            <li><a href="/time">时间轴</a> </li>
+            <li><a href="/gbook">留言</a> </li>
+            <li><a href="/about">关于我</a> </li>
+            <li><a href="/release">发表博客</a></li>
+        </nav>
+    </div>
+    {% if session.isLogin=='True' %}
+        <a href="/" id="login" target="_blank">欢迎您，{{session.uname}}</a>
+        <a href="/logout" id="register" target="_blank">退出</a>
+
+    {% else %}
+        <a href="/login" id="login" target="_blank">登录</a>
+        <a href="/register" id="register" target="_blank">注册</a>
+    {% endif %}
+
+    <!--menu end-->
+    <!--mnav begin-->
+{#    <div id="mnav">#}
+{#        <h2><a href="/index" class="mlogo">个人博客</a><span class="navicon"></span></h2>#}
+{#        <dl class="list_dl">#}
+{#            <dt class="list_dt"> <a href="/index">网站首页</a> </dt>#}
+{#            <dt class="list_dt"> <a href="#">文章列表</a> </dt>#}
+{#            <dd class="list_dd">#}
+{#                <ul>#}
+{#                    {% for category_obj in category_objs %}#}
+{#                        <li><a href="/list?category_id={{ category_obj.id }}">{{ category_obj.cate_name }}</a></li>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
+{#            </dd>#}
+{#            <dt class="list_dt"> <a href="/photo">我的相册</a> </dt>#}
+{#            <dt class="list_dt"> <a href="/time">时间轴</a> </dt>#}
+{#            <dt class="list_dt"> <a href="/gbook">留言</a> </dt>#}
+{#            <dt class="list_dt"> <a href="/about">关于我</a> </dt>#}
+{#        </dl>#}
+{#    </div>#}
+    <!--mnav end-->
+
+
+</header>
