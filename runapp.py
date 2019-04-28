@@ -19,6 +19,7 @@ if __name__=="__main__":
     appname=[
         ('django','blog','manage.py'," runserver",' 0.0.0.0',':8000'), #blog
         ('flask','blognew','manage.py'," runserver",' --host 0.0.0.0',' --port 7000'), #blog-my
+        ('flask','main','app.py'," runserver",' --host 0.0.0.0',' --port 80'), #main
     ]
 
     runlist=[]
