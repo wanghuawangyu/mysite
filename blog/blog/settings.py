@@ -90,10 +90,20 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+import getpass
+HOST_NAME=getpass.getuser()
+print(HOST_NAME)
+if HOST_NAME=='Administrator':
+    host="127.0.0.1"
+elif HOST_NAME=='tarena':
+    host="176.234.12.55"
+else:
+    host = "127.0.0.1"
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        "HOST":"localhost",    #连接数据库的地址
+        "HOST":host,    #连接数据库的地址
         "PORT":3306,   # 端口
         "NAME":"blog",    # 数据库名称
         "USER":"root",  # 用户

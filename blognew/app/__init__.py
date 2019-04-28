@@ -14,6 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 db=SQLAlchemy()
 
 
+
 def creat_app():
     # 1.创建Flask的应用 -app
     app=Flask(__name__)
@@ -21,7 +22,16 @@ def creat_app():
     # 配置启动模式为调试模式
     app.config['DEBUG']=True
     # 配置数据库的连接信息
-    app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:123456@127.0.0.1:3306/blognew'
+    import getpass
+    HOST_NAME = getpass.getuser()
+    print(HOST_NAME)
+    if HOST_NAME == 'Administrator':
+        host = "127.0.0.1"
+    elif HOST_NAME == 'tarena':
+        host = "176.234.12.55"
+    else:
+        host = "127.0.0.1"
+    app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:123456@'+host+':3306/blognew'
     # 配置数据库的自动提交
     app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN']=True
     # 配置数据库的信号追踪
