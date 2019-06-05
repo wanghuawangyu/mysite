@@ -106,7 +106,7 @@ DATABASES = {
         "HOST":host,    #连接数据库的地址
         "PORT":3306,   # 端口
         "NAME":"blog",    # 数据库名称
-        "USER":"root",  # 用户
+        "USER":"wang",  # 用户
         "PASSWORD":"123456", # 密码
     }
 }
